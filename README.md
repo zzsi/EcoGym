@@ -13,6 +13,31 @@ EcoGym: Evaluating LLMs for Long-Horizon Plan-and-Execute in Interactive Economi
   <strong>A Generalizable Benchmark for Continuous Plan-and-Execute Decision Making in Interactive Economies</strong>
 </p>
 
+## Fork Status
+
+This fork repairs Operation's `acquisition_boost`: acquired users now increase
+DAU immediately, as documented by the tool. Previously the action reported
+successful acquisition but only recorded it in action history. The fix uses the
+same noisy integer count as the receipt; acquired users then participate in the
+normal daily retention dynamics.
+
+Upstream base: `e4f63c613adf3641d50df30d196898cddf31fd73`.
+Report experiments using this fork as a patched EcoGym revision, not as directly
+comparable to the original published scores shown below. No reward formulas,
+difficulty parameters, action budgets or noise behavior were changed. The
+separate daily RNG reseeding concern and unused `get_platform_metrics` helper
+error remain outside this repair.
+
+Run the regression tests after installing the project dependencies:
+
+```bash
+PYTHONPATH=libs/agno python -m unittest discover -s tests -v
+```
+
+The tests need no model calls or API credentials. They cover immediate gains,
+the actual noisy count, repeated and zero acquisition, the default DAU, and
+daily transitions after JSON state restoration.
+
 ## 🌟 Overview
 
 Long-horizon planning is widely recognized as a core capability of autonomous LLM-based agents; however, current evaluation frameworks suffer from being largely episodic, domain-specific, or insufficiently grounded in persistent economic dynamics. We introduce **EcoGym**, a generalizable benchmark for continuous plan-and-execute decision making in interactive economies. 

@@ -15,6 +15,7 @@
 # limitations under the License.
 
 # Modified by OPPO
+# Modified by zzsi: apply the documented immediate acquisition gain to DAU.
 # Licensed under the Apache License, Version 2.0 (the "License");
 from typing import Dict, Any, Optional
 import json
@@ -121,6 +122,7 @@ class PlatformOperatorTools(Toolkit):
         new_users_base = base_new_users + quality_bonus
         
         new_users = int(self._apply_action_noise(new_users_base, "acquisition_campaign", session_state))
+        session_state["dau"] = session_state.get("dau", 1000) + new_users
         
         history = session_state.setdefault("action_history", [])
         history.append({
